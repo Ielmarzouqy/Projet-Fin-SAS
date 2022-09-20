@@ -9,9 +9,13 @@ struct produit {
     double Prix;
 };
 struct produit medicament[50];
- struct produit L;
+// struct produit Medicaments[50];
+//  struct produit N;
+ struct produit P;
     int compt=0;
-    int i, j, test;
+    int i=0;
+    int j=0;
+    int test;
 void cleanCls(){
     system("Cls||clear");
 }
@@ -42,35 +46,78 @@ void AjouterPlusProduit(){
     compt++;
      }
 }
-void AfficheListe(){
+ //- lister tous les produits selon l’ordre alphabétique du nom.
+
+void AfficheListeNom(){
     // struct produit List[50];
-    int i, j, test;
-    do{
-         test=0;
-          for (j=-1;j>i;j--){
-             if(strcmp(medicament[j].Nom, medicament[j-1].Nom)<0){
-                L=medicament[j];
-                medicament[j]=medicament[j-1];
-                medicament[j-1]=L;
-                test=1;
-                
+    int i;
+    int j;
+    struct produit inter;
+          for (i=0;i<compt-1;i++){
+            for (j=i+1;j<compt;j++){
+              if(medicament[i].Nom[0]>medicament[j].Nom[0]){ 
+            
+                strcpy(inter.Nom, medicament[i].Nom);
+                strcpy(inter.Code, medicament[i].Code);
+                 inter.Quantite= medicament[i].Quantite;
+                inter.Prix= medicament[i].Prix;
+
+                strcpy(medicament[i].Nom, medicament[j].Nom);
+                strcpy(medicament[i].Code, medicament[j].Code);
+                medicament[i].Quantite= medicament[j].Quantite;
+                medicament[i].Prix= medicament[j].Prix;
+
+                strcpy(medicament[j].Nom, inter.Nom);
+                strcpy(medicament[j].Code, inter.Code);
+                medicament[j].Quantite= inter.Quantite;
+                medicament[j].Prix= inter.Prix;                
              }
           }
     }
+    for(i=0;i<compt;i++)
+    {
+     printf("Nom:%s Code :%s Quantite : %d Prix : %2.lf Prix TTC: %2.lf", medicament[i].Nom, medicament[i].Code, medicament[i].Quantite,medicament[i].Prix, (medicament[i].Prix)*1.15);
+    }
+}
+   
+void AfficheListePrix(){
+     // struct produit List[50];
+    int i;
+    int j;
+    struct produit temp;
+          for (i=0;i<compt-1;i++){
+            for (j=i+1;j<compt;j++){
+              if(medicament[i].Prix<medicament[j].Prix){ 
+            
+                strcpy(temp.Nom, medicament[i].Nom);
+                strcpy(temp.Code, medicament[i].Code);
+                 temp.Quantite= medicament[i].Quantite;
+                temp.Prix= medicament[i].Prix;
 
- while ( test=1 && i<compt);
- }
+                strcpy(medicament[i].Nom, medicament[j].Nom);
+                strcpy(medicament[i].Code, medicament[j].Code);
+                medicament[i].Quantite= medicament[j].Quantite;
+                medicament[i].Prix= medicament[j].Prix;
 
-    // printf("Le nom est :%s \n Le code est:%s \n La quantite est :%d \n Le prix est :%lf", medicament[i].Nom, medicament[i].Code, medicament[i].Quantite, medicament[i].Prix);
-    //   }
- 
+                strcpy(medicament[j].Nom, temp.Nom);
+                strcpy(medicament[j].Code, temp.Code);
+                medicament[j].Quantite= temp.Quantite;
+                medicament[j].Prix= temp.Prix;                
+             }
+          }
+    }
+    for(i=0;i<compt;i++)
+    {
+     printf("Nom:%s Code :%s Quantite : %d Prix : %2.lf Prix TTC: %2.lf", medicament[i].Nom, medicament[i].Code, medicament[i].Quantite,medicament[i].Prix, (medicament[i].Prix)*1.15);
+    }
+}
 int main() {
     int choix;
     int choix2;
     do{
         printf("1- Ajouter :\n");
         printf("2- Ajouter plusieur medicaments :\n");
-        printf("3- Afficher la liste de produit par ordre alphabetique :\n");
+        printf("3- Afficher la liste de produit par ordre  :\n");
         printf("4- Rechercher:\n");
         printf("5- Suprimer :\n");
         printf("Donner votre choix: ");
@@ -87,16 +134,22 @@ int main() {
                    break;
                    }
             case 3:{
+                printf("11-- liste par ordre alphabetique");
+                printf("12 liste par ordre décroissant du prix");
+                printf("donner votre choix d'ordre: \n");
+                scanf("%d", &choix2);
                      switch (choix2){
-                        cleanCls();
-
-                         case 1:{
-                        //  func1();
+                         case 11:{
+                            cleanCls();
+                        //  func1(ordre alpha);
+                        AfficheListeNom();
                                 break;
                                 }
-                         case 2:{
-                        //   func1();
-                                break;
+                         case 12:{
+                            cleanCls();
+                            AfficheListePrix();
+                        //   func1(ordre prix);
+                                  break;
                                 }
                         }
                    break;
